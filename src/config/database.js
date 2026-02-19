@@ -2,7 +2,12 @@ import mongoose from "mongoose";
 
 const connectDB = async() => {
     try{
-        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}`);
+        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}`, {
+            serverSelectionTimeoutMS: 5000,
+            socketTimeoutMS: 45000,
+            tls: true,
+            retryWrites: true
+        });
         console.log(`/n MONGO DB CONNECTT!!!!: ${connectionInstance.connection.host}`)
     }
     catch(err){
